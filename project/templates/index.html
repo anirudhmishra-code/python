@@ -1,0 +1,426 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Agentic AI User Management Portal</title>
+
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" rel="stylesheet">
+
+<style>
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: "Segoe UI", sans-serif;
+    background: #f4f7fb;
+}
+
+/* Header */
+
+.header {
+    background: linear-gradient(
+        135deg,
+        #0f172a,
+        #1e3a8a
+    );
+
+    color: white;
+    padding: 25px 50px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    box-shadow: 0px 4px 15px rgba(0,0,0,.15);
+}
+
+.logo {
+    font-size: 32px;
+    font-weight: bold;
+}
+
+.logo span {
+    color: #60a5fa;
+}
+
+.user {
+    font-size: 15px;
+}
+
+/* Dashboard */
+
+.dashboard {
+    padding: 30px;
+}
+
+.cards {
+    display: flex;
+    gap: 20px;
+    margin-bottom: 30px;
+}
+
+.card {
+    flex: 1;
+    background: white;
+    border-radius: 18px;
+    padding: 25px;
+    box-shadow: 0 5px 20px rgba(0,0,0,.08);
+    transition: .3s;
+}
+
+.card:hover {
+    transform: translateY(-5px);
+}
+
+.number {
+    font-size: 30px;
+    font-weight: bold;
+    color: #1e3a8a;
+}
+
+.title {
+    color: gray;
+}
+
+/* Actions */
+
+.action-bar {
+    background: white;
+    border-radius: 18px;
+    padding: 20px;
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 20px;
+    box-shadow: 0 5px 15px rgba(0,0,0,.08);
+}
+
+.btn {
+    border: none;
+    padding: 12px 22px;
+    border-radius: 10px;
+    cursor: pointer;
+    color: white;
+    font-weight: 600;
+    margin-right: 10px;
+}
+
+.btn-show {
+    background: #2563eb;
+}
+
+.btn-add {
+    background: #16a34a;
+}
+
+.btn-update {
+    background: #ea580c;
+}
+
+.btn:hover {
+    opacity: .9;
+}
+
+.search {
+    padding: 10px;
+    width: 250px;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+}
+
+/* Table */
+
+.table-container {
+    background: white;
+    border-radius: 18px;
+    padding: 25px;
+    box-shadow: 0 5px 15px rgba(0,0,0,.08);
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+th {
+    background: #1e3a8a;
+    color: white;
+    padding: 15px;
+}
+
+td {
+    padding: 15px;
+    border-bottom: 1px solid #eee;
+}
+
+tr:hover {
+    background: #f9fafb;
+}
+
+.role-admin {
+    color: green;
+    font-weight: bold;
+}
+
+.role-user {
+    color: #2563eb;
+}
+
+.edit-btn {
+    background: #f59e0b;
+    color: white;
+    border: none;
+    padding: 8px 15px;
+    border-radius: 8px;
+    cursor: pointer;
+}
+
+/* Footer */
+
+.footer {
+    text-align: center;
+    margin-top: 25px;
+    color: gray;
+    font-size: 13px;
+}
+
+</style>
+</head>
+
+<body>
+
+<div class="header">
+
+    <div class="logo">
+        🤖 Agentic<span>AI</span>
+    </div>
+
+    <div class="user">
+        DevOps Manager Portal
+    </div>
+
+</div>
+
+<div class="dashboard">
+
+    <!-- STATISTICS -->
+
+    <div class="cards">
+
+        <div class="card">
+            <div class="number">50</div>
+            <div class="title">Total Users</div>
+        </div>
+
+        <div class="card">
+            <div class="number">5</div>
+            <div class="title">Administrators</div>
+        </div>
+
+        <div class="card">
+            <div class="number">45</div>
+            <div class="title">Standard Users</div>
+        </div>
+
+        <div class="card">
+            <div class="number">99.9%</div>
+            <div class="title">Platform Availability</div>
+        </div>
+
+    </div>
+
+    <!-- ACTIONS -->
+
+    <div class="action-bar">
+
+        <div>
+
+            <button class="btn btn-show"
+                onclick="showRecords()">
+                <i class="fa-solid fa-table"></i>
+                Show Records
+            </button>
+
+            <button class="btn btn-add"
+                onclick="addRecord()">
+                <i class="fa-solid fa-user-plus"></i>
+                Add Record
+            </button>
+
+        </div>
+
+        <input
+            type="text"
+            class="search"
+            placeholder="Search User..."
+            onkeyup="searchUser(this.value)"
+        >
+
+    </div>
+
+    <!-- TABLE -->
+
+    <div class="table-container">
+
+        <h2 style="margin-bottom:20px;">
+            User Management
+        </h2>
+
+        <table id="userTable">
+
+            <thead>
+
+            <tr>
+                <th>ID</th>
+                <th>User Name</th>
+                <th>Email</th>
+                <th>Role</th>
+                <th>Actions</th>
+            </tr>
+
+            </thead>
+
+            <tbody>
+
+            <tr>
+                <td>1</td>
+                <td>Anirudh</td>
+                <td>anirudh@test.com</td>
+                <td class="role-admin">ADMIN</td>
+
+                <td>
+                    <button
+                       class="edit-btn"
+                       onclick="updateRecord(this)">
+                       Alter Record
+                    </button>
+                </td>
+            </tr>
+
+            <tr>
+                <td>2</td>
+                <td>Amit</td>
+                <td>amit@test.com</td>
+                <td class="role-user">USER</td>
+
+                <td>
+                    <button
+                      class="edit-btn"
+                      onclick="updateRecord(this)">
+                      Alter Record
+                    </button>
+                </td>
+            </tr>
+
+            </tbody>
+
+        </table>
+
+    </div>
+
+    <div class="footer">
+        © 2026 Agentic AI Platform | User Identity & Access Management
+    </div>
+
+</div>
+
+<script>
+
+function showRecords(){
+    alert("Loading records from database...");
+}
+
+function addRecord(){
+
+    let username=prompt("Enter Username");
+    let email=prompt("Enter Email");
+    let role=prompt("ADMIN or USER");
+
+    if(!username || !email) return;
+
+    let table =
+        document.getElementById("userTable")
+        .getElementsByTagName("tbody")[0];
+
+    let row=table.insertRow();
+
+    row.insertCell(0).innerHTML=
+        table.rows.length;
+
+    row.insertCell(1).innerHTML=
+        username;
+
+    row.insertCell(2).innerHTML=
+        email;
+
+    row.insertCell(3).innerHTML=
+        role;
+
+    row.insertCell(4).innerHTML=
+        '<button class="edit-btn" onclick="updateRecord(this)">Alter Record</button>';
+}
+
+function updateRecord(btn){
+
+    let row=btn.parentNode.parentNode;
+
+    let username =
+       prompt(
+        "New Username",
+        row.cells[1].innerHTML
+       );
+
+    let email =
+       prompt(
+        "New Email",
+        row.cells[2].innerHTML
+       );
+
+    let role =
+       prompt(
+        "Role",
+        row.cells[3].innerHTML
+       );
+
+    if(username)
+        row.cells[1].innerHTML=username;
+
+    if(email)
+        row.cells[2].innerHTML=email;
+
+    if(role)
+        row.cells[3].innerHTML=role;
+}
+
+function searchUser(value){
+
+    let filter =
+        value.toUpperCase();
+
+    let rows =
+        document.querySelectorAll(
+            "#userTable tbody tr"
+        );
+
+    rows.forEach(row=>{
+
+        let name =
+          row.cells[1].textContent;
+
+        row.style.display =
+          name.toUpperCase().includes(filter)
+          ? ""
+          : "none";
+
+    });
+}
+
+</script>
+
+</body>
+
+</html>
